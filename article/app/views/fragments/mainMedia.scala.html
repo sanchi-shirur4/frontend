@@ -14,7 +14,7 @@
         *@
         @List(OneByOne, FourByThree, Item1200).map { size =>
             @defining(size.bestFor(image)) { asset =>
-                <meta itemprop="associatedMedia image" content="@size.bestSrcFor(image).getOrElse("")">
+                <meta itemprop="image" content="@size.bestSrcFor(image).getOrElse("")">
             }
         }
     }
