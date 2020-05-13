@@ -1,5 +1,5 @@
 @import views.MainMediaWidths
-@import views.support.{Video640, Item1200}
+@import views.support.{Video640, Item1200, OneByOne, FourByThree}
 @import model.Trail
 @(article: model.Article)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -9,8 +9,18 @@
 @trailPicAsImageObject(trail: Trail) = {
     @trail.trailPicture.map { image =>
         <div itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject">
-            @defining(Item700.bestFor(image)) { asset =>
-                <meta itemprop="url" content="@Item700.bestSrcFor(image).getOrElse("")">
+            @defining(OneByOne.bestFor(image)) { asset =>
+                <meta itemprop="url" content="@Item1200.bestSrcFor(image).getOrElse("")">
+                <meta itemprop="width" content="@asset.fold(0)(_.width)">
+                <meta itemprop="height" content="@asset.fold(0)(_.height)">
+            }
+            @defining(FourByThree.bestFor(image)) { asset =>
+                <meta itemprop="url" content="@Item1200.bestSrcFor(image).getOrElse("")">
+                <meta itemprop="width" content="@asset.fold(0)(_.width)">
+                <meta itemprop="height" content="@asset.fold(0)(_.height)">
+            }
+            @defining(Item1200.bestFor(image)) { asset =>
+                <meta itemprop="url" content="@Item1200.bestSrcFor(image).getOrElse("")">
                 <meta itemprop="width" content="@asset.fold(0)(_.width)">
                 <meta itemprop="height" content="@asset.fold(0)(_.height)">
             }
