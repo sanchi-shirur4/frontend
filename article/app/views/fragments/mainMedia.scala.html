@@ -6,25 +6,17 @@
 @import model.{VideoPlayer}
 @import views.{MainCleaner}
 
-@trailPicAsImageObject(trail: Trail) = {
+@trailPicAsStructuredDataImage(trail: Trail) = {
     @trail.trailPicture.map { image =>
-        <div itemprop="associatedMedia image" itemscope itemtype="http://schema.org/ImageObject">
-            @defining(OneByOne.bestFor(image)) { asset =>
-                <meta itemprop="url" content="@Item1200.bestSrcFor(image).getOrElse("")">
-                <meta itemprop="width" content="@asset.fold(0)(_.width)">
-                <meta itemprop="height" content="@asset.fold(0)(_.height)">
-            }
-            @defining(FourByThree.bestFor(image)) { asset =>
-                <meta itemprop="url" content="@Item1200.bestSrcFor(image).getOrElse("")">
-                <meta itemprop="width" content="@asset.fold(0)(_.width)">
-                <meta itemprop="height" content="@asset.fold(0)(_.height)">
-            }
-            @defining(Item1200.bestFor(image)) { asset =>
-                <meta itemprop="url" content="@Item1200.bestSrcFor(image).getOrElse("")">
-                <meta itemprop="width" content="@asset.fold(0)(_.width)">
-                <meta itemprop="height" content="@asset.fold(0)(_.height)">
-            }
-        </div>
+        @defining(OneByOne.bestFor(image)) { asset =>
+            <meta itemprop="associatedMedia image" content="@OneByOne.bestSrcFor(image).getOrElse("")">
+        }
+        @defining(FourByThree.bestFor(image)) { asset =>
+            <meta itemprop="associatedMedia image" content="@FourByThree.bestSrcFor(image).getOrElse("")">
+        }
+        @defining(Item1200.bestFor(image)) { asset =>
+            <meta itemprop="associatedMedia image" content="@Item1200.bestSrcFor(image).getOrElse("")">
+        }
     }
 }
 
@@ -32,7 +24,7 @@
     <div class="media-primary">
         @MainCleaner(article)
 
-        @trailPicAsImageObject(article.trail)
+        @trailPicAsStructuredDataImage(article.trail)
     </div>
 } else {
     @if(!article.hasVideoAtTop) {
@@ -74,7 +66,7 @@
                 </figure>
             }
 
-            @trailPicAsImageObject(article.trail)
+            @trailPicAsStructuredDataImage(article.trail)
         } else {
             @article.elements.mainPicture.map { picture =>
                 @fragments.imageFigure(
