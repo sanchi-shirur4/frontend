@@ -1,10 +1,9 @@
 @import views.MainMediaWidths
-@import views.support.Item700
+@import views.support.{Video640, Item1200}
 @import model.Trail
 @(article: model.Article)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import model.{VideoPlayer}
-@import views.support.Video640
 @import views.{MainCleaner}
 
 @trailPicAsImageObject(trail: Trail) = {
