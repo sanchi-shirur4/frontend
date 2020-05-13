@@ -8,14 +8,10 @@
 
 @trailPicAsStructuredDataImage(trail: Trail) = {
     @trail.trailPicture.map { image =>
-        @defining(OneByOne.bestFor(image)) { asset =>
-            <meta itemprop="associatedMedia image" content="@OneByOne.bestSrcFor(image).getOrElse("")">
-        }
-        @defining(FourByThree.bestFor(image)) { asset =>
-            <meta itemprop="associatedMedia image" content="@FourByThree.bestSrcFor(image).getOrElse("")">
-        }
-        @defining(Item1200.bestFor(image)) { asset =>
-            <meta itemprop="associatedMedia image" content="@Item1200.bestSrcFor(image).getOrElse("")">
+        @List(OneByOne, FourByThree, Item1200).map { size =>
+            @defining(size.bestFor(image)) { asset =>
+                <meta itemprop="associatedMedia image" content="@size.bestSrcFor(image).getOrElse("")">
+            }
         }
     }
 }
