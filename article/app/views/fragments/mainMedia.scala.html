@@ -8,6 +8,10 @@
 
 @trailPicAsStructuredDataImage(trail: Trail) = {
     @trail.trailPicture.map { image =>
+        @*
+         * Recommendations for image sizes from https://developers.google.com/search/docs/data-types/article
+         * (also following DCR's lead)
+        *@
         @List(OneByOne, FourByThree, Item1200).map { size =>
             @defining(size.bestFor(image)) { asset =>
                 <meta itemprop="associatedMedia image" content="@size.bestSrcFor(image).getOrElse("")">
